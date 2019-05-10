@@ -6,8 +6,10 @@
 <body>
 	<div id="my_camera"></div>
 	<input type=button value="Configure" onClick="configure()">
-	 <input type=button value="Take Snapshot" onClick="take_snapshot()">
-	 <input type=button value="Save Snapshot" onClick="saveSnap()">
+	 <input type=button value="Take Happy" onClick="take_h()">
+	 <input type=button value="Take Angry" onClick="take_a()">
+	 <input type=button value="Take Neutral" onClick="take_n()">
+	 <input type="number" name="number" id="myNumber">
 	 
 	<div id="results" ></div>
  
@@ -26,24 +28,63 @@
 	 Webcam.attach( '#my_camera' );
 	}
 
-	function take_snapshot() {
-	 
+	function take_h() {
+	 var cycle = document.getElementById("myNumber").value;
+	 var i;
 	 // take snapshot and get image data
+	 for (i=0; i < cycle; i++){
+	 
+		 setTimeout(function(){
+		 	Webcam.snap( function(data_uri) {
+		  // display results in page
+		  	var link = document.createElement("a");
+		  	link.download = "h.jpg";
+		  	link.href = data_uri;
+	  		document.body.appendChild(link);
+	  		link.click();
+	  		document.body.removeChild(link);
+		  	document.getElementById('results').innerHTML = 
+		  '<img src="'+data_uri+'" id="imgPrev"/>';
+		  alert("ok");
+		  } );
+		 },3000);
+	}
+	}
+	function take_a() {
+	 var cycle = document.getElementById("myNumber").value;
+	 var i;
+	 // take snapshot and get image data
+	 for (i=0; i < cycle; i++){
 	 Webcam.snap( function(data_uri) {
 	  // display results in page
-	  document.getElementById('results').innerHTML = 
-	  '<a href="'+data_uri+'" download="h.jpg">Happy</a> <a href="'+data_uri+'" download="a.jpg">Angry</a> <a href="'+data_uri+'" download="n.jpg">Neutral</a><img src="'+data_uri+'" id="imgPrev"/>';
+	  	var link = document.createElement("a");
+	  	link.download = "a.jpg";
+	  	link.href = data_uri;
+  		document.body.appendChild(link);
+  		link.click();
+  		document.body.removeChild(link);
+	  	document.getElementById('results').innerHTML = 
+	  '<img src="'+data_uri+'" id="imgPrev"/>';
 	  } );
 	}
-	function saveSnap(){
-	 // Get base64 value from <img id='imageprev'> source
-	 var base64image = document.getElementById("results").src;
-
-	 Webcam.upload( base64image, 'upload.php', function(code, text) {
-	  console.log('Save successfully');
-	  //console.log(text);
-	 });
-
+	}
+	function take_n() {
+	 var cycle = document.getElementById("myNumber").value;
+	 var i;
+	 // take snapshot and get image data
+	 for (i=0; i < cycle; i++){
+	 Webcam.snap( function(data_uri) {
+	  // display results in page
+	  	var link = document.createElement("a");
+	  	link.download = "n.jpg";
+	  	link.href = data_uri;
+  		document.body.appendChild(link);
+  		link.click();
+  		document.body.removeChild(link);
+	  	document.getElementById('results').innerHTML = 
+	  '<img src="'+data_uri+'" id="imgPrev"/>';
+	  } );
+	}
 	}
 	</script>
 </body>
